@@ -1,0 +1,79 @@
+{
+  "questions": [
+    {
+      "id": "q1",
+      "kategori": "Hardware",
+      "kunci": 3,
+      "penjelasan": "CPU = Central Processing Unit",
+      "pilihan": [
+        "Central Process Unit",
+        "Computer Personal Unit",
+        "Central Processing Unit",
+        "Core Processing Utility"
+      ],
+      "skor": 10,
+      "soal": "Apa kepanjangan dari 'CPU'?"
+    },
+    {
+      "id": "q2",
+      "kategori": "Dasar",
+      "kunci": 2,
+      "penjelasan": "1 Byte = 8 bit",
+      "pilihan": [
+        "4 bit",
+        "8 bit",
+        "16 bit",
+        "32 bit"
+      ],
+      "skor": 10,
+      "soal": "Berapa jumlah bit dalam 1 Byte?"
+    },
+    {
+      "id": "q3",
+      "kategori": "Hardware",
+      "kunci": 3,
+      "penjelasan": "RAM = Random Access Memory, menyimpan data sementara",
+      "pilihan": [
+        "Menyimpan data permanen",
+        "Memproses grafis",
+        "Menyimpan data sementara",
+        "Mengatur daya listrik"
+      ],
+      "skor": 10,
+      "soal": "Apa fungsi utama RAM pada komputer?"
+    },
+    {
+      "id": "q1781114081780",
+      "kategori": "Multimedia",
+      "kunci": 3,
+      "penjelasan": "Yang termasuk media visual adalah gambar",
+      "pilihan": [
+        "Musik",
+        "Narasi",
+        "Gambar",
+        "Efek suara"
+      ],
+      "skor": 10,
+      "soal": "Berikut yang termasuk media visual adalah..."
+    }
+  ],
+  "settings": {
+    "num_teams": 2,
+    "team_names": [
+      "Tim A",
+      "Tim B"
+    ],
+    "team_colors": [
+      "#ff7822",
+      "#2278ff"
+    ],
+    "lock_duration": 1.5,
+    "result_duration": 4,
+    "camera_index": 0,
+    "show_answer_immediately": true,
+    "allow_partial_teams": true,
+    "session_title": "Gesture Quiz – Classroom Battle",
+    "max_options": 5
+  },
+  "updated_at": "2026-06-11T00:57:41.264746"
+}

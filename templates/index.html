@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gesture Quiz — Web Control</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+
+<!-- ═══ SIDEBAR NAV ═══ -->
+<nav class="sidebar" id="sidebar">
+  <div class="sidebar-brand">
+    <div class="brand-icon">
+      <svg width="26" height="26" viewBox="0 0 28 28" fill="none">
+        <path d="M14 2L26 8v12l-12 6L2 20V8L14 2z" stroke="currentColor" stroke-width="1.8" fill="none"/>
+        <circle cx="14" cy="14" r="4" fill="currentColor" opacity="0.5"/>
+        <path d="M8 11l6 3 6-3M14 14v7" stroke="currentColor" stroke-width="1.8"/>
+      </svg>
+    </div>
+    <div class="brand-text">
+      <span class="brand-name">GestureQuiz</span>
+      <span class="brand-sub">Classroom Battle</span>
+    </div>
+  </div>
+
+  <a href="#" class="nav-item active" data-page="dashboard" data-label="Dashboard">
+    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
+    <span class="nav-item-text">Dashboard</span>
+  </a>
+  <a href="#" class="nav-item" data-page="live" data-label="Live Game">
+    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07M8.46 8.46a5 5 0 0 0 0 7.07"/></svg>
+    <span class="nav-item-text">Live Game</span>
+    <span class="nav-badge" id="live-badge">●</span>
+  </a>
+  <a href="#" class="nav-item" data-page="questions" data-label="Bank Soal">
+    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14,2 14,8 20,8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+    <span class="nav-item-text">Bank Soal</span>
+    <span class="nav-count" id="q-count">0</span>
+  </a>
+  <a href="#" class="nav-item" data-page="teams" data-label="Manajemen Tim">
+    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+    <span class="nav-item-text">Manajemen Tim</span>
+  </a>
+  <a href="#" class="nav-item" data-page="settings" data-label="Pengaturan">
+    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+    <span class="nav-item-text">Pengaturan</span>
+  </a>
+
+  <div class="nav-section-label" style="margin-top:auto">SESSION</div>
+  <div class="sidebar-session-info">
+    <div class="session-state" id="sidebar-state">IDLE</div>
+    <div class="session-detail" id="sidebar-detail">Belum ada sesi aktif</div>
+  </div>
+</nav>
+
+<!-- Sidebar backdrop (mobile) -->
+<div class="sidebar-backdrop" id="sidebar-backdrop"></div>
+
+<!-- ═══ MAIN CONTENT ═══ -->
+<main class="main-content">
+
+  <!-- TOP BAR -->
+  <header class="topbar">
+    <button class="sidebar-toggle" id="sidebar-toggle">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
+    <div class="topbar-title" id="page-title">Dashboard</div>
+    <div class="topbar-actions">
+      <div class="status-dot" id="cam-status" title="Status Kamera">
+        <span></span> Kamera
+      </div>
+      <div class="status-dot offline" id="server-status" title="Status Server">
+        <span></span> Server
+      </div>
+      <button class="btn btn-primary btn-sm" id="btn-quick-start" onclick="quickStart()">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="5,3 19,12 5,21 5,3"/></svg>
+        Mulai Kuis
+      </button>
+    </div>
+  </header>
+
+  <!-- ═══ PAGE: DASHBOARD ═══ -->
+  <section class="page active" id="page-dashboard">
+    <div class="page-header">
+      <div>
+        <h1>Kontrol Utama</h1>
+        <p class="page-desc">Monitor dan kendalikan sesi kuis secara real-time</p>
+      </div>
+      <div class="header-actions">
+        <button class="btn btn-outline" onclick="exportData()">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Export
+        </button>
+      </div>
+    </div>
+
+    <!-- Score Overview -->
+    <div class="score-cards" id="score-cards"></div>
+
+    <!-- Game State Panel -->
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-header">
+          <h3>Kendali Sesi</h3>
+          <div class="state-badge" id="state-badge">IDLE</div>
+        </div>
+        <div class="control-grid">
+          <button class="control-btn primary" onclick="startSession()">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg>
+            Mulai Sesi
+          </button>
+          <button class="control-btn danger" onclick="resetSession()">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-3.1"/></svg>
+            Reset
+          </button>
+          <button class="control-btn secondary" onclick="prevQuestion()">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+            Sebelumnya
+          </button>
+          <button class="control-btn accent" onclick="nextQuestion()">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+            Berikutnya
+          </button>
+        </div>
+        <div class="progress-section">
+          <div class="progress-label">
+            <span>Progres Soal</span>
+            <span id="q-progress-text">0 / 0</span>
+          </div>
+          <div class="progress-bar">
+            <div class="progress-fill" id="q-progress-fill"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header"><h3>Soal Aktif</h3></div>
+        <div class="current-q-panel" id="current-q-panel">
+          <div class="no-session">
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" opacity="0.3"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            <p>Belum ada soal aktif</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Gesture + Chart side by side -->
+    <div class="gesture-chart-row">
+      <!-- Status Gestur -->
+      <div class="card gesture-card-wrap">
+        <div class="card-header">
+          <h3>Status Gestur Real-time</h3>
+          <span class="card-hint">Update otomatis setiap 200ms</span>
+        </div>
+        <div class="gesture-grid" id="gesture-grid"></div>
+      </div>
+
+      <!-- Bar Chart Benar/Salah per Tim -->
+      <div class="card chart-card-wrap">
+        <div class="card-header">
+          <h3>Diagram Jawaban Tim</h3>
+          <span class="card-hint">Benar vs Salah</span>
+        </div>
+        <div class="team-bar-chart" id="team-bar-chart">
+          <div class="chart-empty">Belum ada data jawaban</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Analytics Quick View -->
+    <div class="card">
+      <div class="card-header">
+        <h3>Analitik Sesi</h3>
+        <button class="btn btn-sm btn-outline" onclick="showPage('analytics')">Detail →</button>
+      </div>
+      <div class="analytics-grid" id="analytics-mini">
+        <div class="stat-box">
+          <div class="stat-num" id="stat-total-q">0</div>
+          <div class="stat-label">Total Soal</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-num" id="stat-done-q">0</div>
+          <div class="stat-label">Selesai</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-num" id="stat-class-acc">—</div>
+          <div class="stat-label">Akurasi Kelas</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-num" id="stat-session-time">—</div>
+          <div class="stat-label">Waktu Sesi</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ PAGE: LIVE GAME ═══ -->
+  <section class="page" id="page-live">
+    <div class="page-header">
+      <div>
+        <h1>Live Game View</h1>
+        <p class="page-desc">Tampilan kamera real-time dan status gestur</p>
+      </div>
+      <div class="header-actions">
+        <button class="btn btn-outline" onclick="toggleCamera()">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 7l-7 5 7 5V7z"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
+          <span id="cam-btn-text">Mulai Kamera</span>
+        </button>
+      </div>
+    </div>
+    <div class="live-layout">
+      <div class="video-card">
+        <div class="video-header">
+          <div class="rec-dot"></div>
+          <span>LIVE FEED</span>
+          <span class="video-res" id="video-res">854×480</span>
+        </div>
+        <div class="video-container">
+          <img src="" class="video-feed" id="video-feed" alt="Live Camera Feed">
+          <div class="video-overlay" id="video-overlay">
+            <div class="video-overlay-inner">
+              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M23 7l-7 5 7 5V7z"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
+              <p>Kamera tidak aktif</p>
+              <button class="btn btn-primary" onclick="toggleCamera()">Aktifkan Kamera</button>
+            </div>
+          </div>
+        </div>
+        <div class="zone-indicators" id="zone-indicators"></div>
+      </div>
+      <div class="live-side">
+        <div class="card live-q-card" id="live-q-display">
+          <div class="live-q-num" id="live-q-num">—</div>
+          <div class="live-q-text" id="live-q-text">Belum ada soal aktif</div>
+          <div class="live-q-options" id="live-q-options"></div>
+        </div>
+        <div class="card">
+          <div class="card-header"><h3>Status Tim</h3></div>
+          <div class="live-teams" id="live-teams"></div>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <h3>Override Manual</h3>
+            <span class="card-hint">Untuk Guru / Operator</span>
+          </div>
+          <div class="override-panel" id="override-panel"></div>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <h3>Simulasi Gestur</h3>
+            <span class="card-hint">Demo tanpa kamera fisik</span>
+          </div>
+          <div class="simulate-panel" id="simulate-panel"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ PAGE: QUESTIONS ═══ -->
+  <section class="page" id="page-questions">
+    <div class="page-header">
+      <div>
+        <h1>Bank Soal</h1>
+        <p class="page-desc">Kelola, tambah, edit, dan hapus soal kuis</p>
+      </div>
+      <div class="header-actions">
+        <button class="btn btn-outline" onclick="importQuestions()">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+          Import JSON
+        </button>
+        <button class="btn btn-primary" onclick="openAddQuestion()">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          Tambah Soal
+        </button>
+      </div>
+    </div>
+    <div class="filter-bar">
+      <input type="text" id="q-search" placeholder="Cari soal..." oninput="filterQuestions()" class="filter-input">
+      <select id="q-cat-filter" onchange="filterQuestions()" class="filter-select">
+        <option value="">Semua Kategori</option>
+      </select>
+      <div class="filter-stats" id="filter-stats">Memuat...</div>
+    </div>
+    <div class="question-list" id="question-list">
+      <div class="loading-state"><div class="spinner"></div>Memuat soal...</div>
+    </div>
+  </section>
+
+  <!-- ═══ PAGE: TEAMS ═══ -->
+  <section class="page" id="page-teams">
+    <div class="page-header">
+      <div>
+        <h1>Manajemen Tim</h1>
+        <p class="page-desc">Konfigurasi tim yang akan berlaga</p>
+      </div>
+    </div>
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-header"><h3>Jumlah Tim</h3></div>
+        <div class="team-count-selector">
+          <div class="team-count-label">Pilih berapa tim yang bersaing:</div>
+          <div class="team-count-buttons">
+            <button class="count-btn" data-count="2" onclick="setTeamCount(2)">2 Tim</button>
+            <button class="count-btn" data-count="3" onclick="setTeamCount(3)">3 Tim</button>
+            <button class="count-btn" data-count="4" onclick="setTeamCount(4)">4 Tim</button>
+          </div>
+          <div class="team-zone-preview" id="team-zone-preview"></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header"><h3>Panduan Posisi</h3></div>
+        <div class="position-guide" id="position-guide"></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-header"><h3>Konfigurasi Tim</h3></div>
+      <div class="team-config-list" id="team-config-list"></div>
+      <button class="btn btn-primary" onclick="saveTeamConfig()" style="margin-top:1.5rem">
+        Simpan Konfigurasi Tim
+      </button>
+    </div>
+    <div class="card">
+      <div class="card-header"><h3>Papan Skor Saat Ini</h3></div>
+      <div class="leaderboard" id="leaderboard"></div>
+    </div>
+  </section>
+
+  <!-- ═══ PAGE: SETTINGS ═══ -->
+  <section class="page" id="page-settings">
+    <div class="page-header">
+      <div>
+        <h1>Pengaturan</h1>
+        <p class="page-desc">Konfigurasi sesi dan perilaku kuis</p>
+      </div>
+    </div>
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-header"><h3>Sesi</h3></div>
+        <div class="settings-form">
+          <div class="form-field">
+            <label>Judul Sesi</label>
+            <input type="text" id="s-title" placeholder="Gesture Quiz – Classroom Battle">
+          </div>
+          <div class="form-field">
+            <label>Durasi Kunci Jawaban (detik)</label>
+            <div class="slider-row">
+              <input type="range" id="s-lock-dur" min="1" max="5" step="0.5" value="2">
+              <span id="s-lock-dur-val">2.0s</span>
+            </div>
+          </div>
+          <div class="form-field">
+            <label>Durasi Tampil Hasil (detik)</label>
+            <div class="slider-row">
+              <input type="range" id="s-result-dur" min="2" max="10" step="1" value="4">
+              <span id="s-result-dur-val">4s</span>
+            </div>
+          </div>
+          <div class="form-field">
+            <label>Index Kamera</label>
+            <input type="number" id="s-cam-idx" min="0" max="5" value="0">
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header"><h3>Aturan Permainan</h3></div>
+        <div class="settings-form">
+          <div class="toggle-field">
+            <div>
+              <div class="toggle-label">Izinkan Tim Parsial</div>
+              <div class="toggle-desc">Lanjut ke hasil meski ada tim yang belum menjawab</div>
+            </div>
+            <label class="toggle-switch">
+              <input type="checkbox" id="s-partial" checked>
+              <span class="toggle-track"></span>
+            </label>
+          </div>
+          <div class="toggle-field">
+            <div>
+              <div class="toggle-label">Tampilkan Jawaban Langsung</div>
+              <div class="toggle-desc">Jawaban benar terlihat setelah semua mengunci</div>
+            </div>
+            <label class="toggle-switch">
+              <input type="checkbox" id="s-show-ans" checked>
+              <span class="toggle-track"></span>
+            </label>
+          </div>
+          <div class="form-field" style="margin-top:1rem">
+            <label>Maksimal Pilihan Jawaban</label>
+            <select id="s-max-opts">
+              <option value="2">2 Pilihan (A, B)</option>
+              <option value="3">3 Pilihan (A, B, C)</option>
+              <option value="4" selected>4 Pilihan (A, B, C, D)</option>
+              <option value="5">5 Pilihan (A, B, C, D, E)</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+    <button class="btn btn-primary" onclick="saveSettings()" style="margin-top:0.5rem">
+      Simpan Semua Pengaturan
+    </button>
+  </section>
+
+  <!-- ═══ PAGE: ANALYTICS ═══ -->
+  <section class="page" id="page-analytics">
+    <div class="page-header">
+      <div>
+        <h1>Analitik Detail</h1>
+        <p class="page-desc">Statistik performa per soal dan per tim</p>
+      </div>
+      <div class="header-actions">
+        <button class="btn btn-outline" onclick="exportData()">Export JSON</button>
+      </div>
+    </div>
+    <div id="analytics-detail"></div>
+  </section>
+
+</main>
+
+<!-- ═══ MODAL: ADD/EDIT QUESTION ═══ -->
+<div class="modal-overlay" id="modal-question" onclick="closeModal('modal-question')">
+  <div class="modal" onclick="event.stopPropagation()">
+    <div class="modal-header">
+      <h2 id="modal-q-title">Tambah Soal Baru</h2>
+      <button class="modal-close" onclick="closeModal('modal-question')">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" id="mq-id">
+      <div class="form-field">
+        <label>Pertanyaan *</label>
+        <textarea id="mq-soal" rows="3" placeholder="Tulis soal di sini..."></textarea>
+      </div>
+      <div class="form-field">
+        <label>Kategori</label>
+        <input type="text" id="mq-kat" placeholder="cth: Hardware, Web, Multimedia">
+      </div>
+      <div class="form-field">
+        <label>Pilihan Jawaban</label>
+        <div id="mq-options-container"></div>
+        <button class="btn btn-sm btn-outline" onclick="addOptionField()" id="btn-add-opt" style="margin-top:0.5rem">+ Tambah Pilihan</button>
+      </div>
+      <div class="form-field mq-meta-row">
+        <div>
+          <label>Kunci Jawaban *</label>
+          <select id="mq-kunci">
+            <option value="1">A (1 Jari)</option>
+            <option value="2">B (2 Jari)</option>
+            <option value="3">C (3 Jari)</option>
+            <option value="4">D (4 Jari)</option>
+            <option value="5">E (5 Jari)</option>
+          </select>
+        </div>
+        <div>
+          <label>Poin / Skor</label>
+          <input type="number" id="mq-skor" value="10" min="1" max="100">
+        </div>
+      </div>
+      <div class="form-field">
+        <label>Penjelasan (opsional)</label>
+        <textarea id="mq-penjelasan" rows="2" placeholder="Penjelasan singkat mengapa jawaban ini benar..."></textarea>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-outline" onclick="closeModal('modal-question')">Batal</button>
+      <button class="btn btn-primary" onclick="saveQuestion()">Simpan Soal</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ MODAL: CONFIRM ═══ -->
+<div class="modal-overlay" id="modal-confirm">
+  <div class="modal modal-sm">
+    <div class="modal-body" style="text-align:center;padding:2rem">
+      <div id="confirm-icon" style="margin-bottom:1rem"></div>
+      <h3 id="confirm-title">Konfirmasi</h3>
+      <p id="confirm-desc" style="color:var(--text-muted);margin:0.5rem 0 1.5rem"></p>
+      <div style="display:flex;gap:0.75rem;justify-content:center">
+        <button class="btn btn-outline" onclick="closeModal('modal-confirm')">Batal</button>
+        <button class="btn btn-danger" id="confirm-ok-btn">Ya, Lanjutkan</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ OVERLAY: QUIZ END RESULT ═══ -->
+<div class="quiz-end-overlay" id="quiz-end-overlay">
+  <div class="qeo-inner">
+    <div class="qeo-title">🎉 Kuis Selesai!</div>
+    <div class="qeo-winner" id="qeo-winner"></div>
+    <div class="qeo-scores" id="qeo-scores"></div>
+    <div class="qeo-stats" id="qeo-stats"></div>
+    <div class="qeo-actions">
+      <button class="btn btn-outline" onclick="closeQuizEnd()">Tutup</button>
+      <button class="btn btn-primary" onclick="() => { closeQuizEnd(); showPage('analytics'); }">
+        Lihat Analitik
+      </button>
+      <button class="btn btn-danger" onclick="() => { closeQuizEnd(); resetSession(); }">
+        Reset Sesi
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast-container" id="toast-container"></div>
+
+<!-- ═══ ANSWER RESULT POPUP ═══ -->
+<div class="answer-popup-overlay" id="answer-popup-overlay">
+  <div class="answer-popup" id="answer-popup">
+    <div class="popup-icon" id="popup-icon">🎉</div>
+    <div class="popup-title" id="popup-title">Benar!</div>
+    <div class="popup-answer-row" id="popup-answer-row"></div>
+    <div class="popup-correct-ans" id="popup-correct-ans"></div>
+    <div class="popup-dismiss">Menutup...</div>
+  </div>
+</div>
+
+<!-- ═══ COUNTDOWN POPUP ═══ -->
+<div class="countdown-popup" id="countdown-popup">
+  <div class="countdown-circle" id="countdown-circle">
+    <div class="countdown-num" id="countdown-num">3</div>
+  </div>
+</div>
+
+<script src="/static/js/app.js"></script>
+</body>
+</html>
